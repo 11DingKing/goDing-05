@@ -436,10 +436,7 @@ func (s *Service) SignReceipt(bookingID string, now time.Time) (*DamageReport, e
 	if err := b.Sign(); err != nil {
 		return nil, err
 	}
-	report, err := s.AssessDamage(bookingID)
-	if err != nil {
-		return nil, err
-	}
+	report := s.assessDamageUnlocked(bookingID)
 	s.store.Save()
 	return report, nil
 }
